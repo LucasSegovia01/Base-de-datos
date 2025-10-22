@@ -2,8 +2,7 @@ import psycopg2
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# --- 1. CONFIGURACIÓN DE CONEXIÓN (GLOBAL) ---
-# ESTE BLOQUE DEBE ESTAR AL INICIO DEL ARCHIVO
+#CONFIGURACIÓN DE CONEXIÓN
 DB_CONFIG = {
     'dbname': 'TIF Prueba1',
     'user': 'postgres',
@@ -12,7 +11,7 @@ DB_CONFIG = {
     'port': '5432'
 }
 
-# --- 2. CONSULTA SQL: Total de especies distintas aisladas por CADA investigador ---
+# CONSULTA SQL: Total de especies distintas aisladas por CADA investigador
 SQL_QUERY_DIVERSIDAD = """
 SELECT
     i.nombre || ' ' || i.apellido AS investigador_completo,
@@ -31,10 +30,9 @@ ORDER BY
 def analizar_diversidad():
     conn = None
     try:
-        # --- 3. CONEXIÓN Y EXTRACCIÓN DE DATOS ---
+        # CONEXIÓN Y EXTRACCIÓN DE DATOS 
         print("Intentando conectar a la base de datos...")
         
-        # EL ERROR ESTABA AQUÍ: DB_CONFIG DEBE SER VISIBLE
         conn = psycopg2.connect(**DB_CONFIG) 
         
         # Ejecutar la consulta y obtener el DataFrame
@@ -47,9 +45,9 @@ def analizar_diversidad():
         print("\nDatos crudos obtenidos:")
         print(df)
 
-        # --- 4. PROCESAMIENTO Y VISUALIZACIÓN ---
+        # PROCESAMIENTO Y VISUALIZACIÓN 
         
-        df_final = df # Ya está agrupado por la consulta SQL
+        df_final = df 
         
         fig, ax = plt.subplots(figsize=(10, 6))
         

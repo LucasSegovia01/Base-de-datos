@@ -2,7 +2,7 @@ import psycopg2
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# --- 1. CONFIGURACIÓN DE CONEXIÓN (GLOBAL) ---
+# CONFIGURACIÓN DE CONEXIÓN 
 DB_CONFIG = {
     'dbname': 'TIF Prueba1',
     'user': 'postgres',
@@ -11,7 +11,7 @@ DB_CONFIG = {
     'port': '5432'
 }
 
-# --- 2. CONSULTA SQL: Microorganismos Multirresistentes ---
+# CONSULTA SQL: Microorganismos Multirresistentes
 SQL_QUERY_MULTIRRESISTENCIA = """
 SELECT
     m.genero || ' ' || m.especie AS especie_completa,
@@ -35,7 +35,7 @@ ORDER BY
 def analizar_multirresistencia():
     conn = None
     try:
-        # --- 3. CONEXIÓN Y EXTRACCIÓN DE DATOS ---
+        # CONEXIÓN Y EXTRACCIÓN DE DATOS
         print("Intentando conectar a la base de datos...")
         conn = psycopg2.connect(**DB_CONFIG) 
         
@@ -49,11 +49,10 @@ def analizar_multirresistencia():
         print("\nDatos crudos obtenidos:")
         print(df)
 
-        # --- 4. VISUALIZACIÓN DE DATOS (Gráfico de Barras Simple) ---
-        
+        #VISUALIZACIÓN DE DATOS
         fig, ax = plt.subplots(figsize=(10, 6))
         
-        # Crear gráfico de barras: Especie vs. Nivel de Resistencia
+        # Crea gráfico de barras: Especie vs. Nivel de Resistencia
         ax.bar(df['especie_completa'], df['total_antibioticos_resistentes'], color='darkorange')
         
         # Etiquetas y Títulos
@@ -61,10 +60,9 @@ def analizar_multirresistencia():
         ax.set_ylabel('N° de Antibióticos a los que es Resistente', fontsize=12)
         ax.set_xlabel('Especie Microbiana', fontsize=12)
         
-        # Rotar etiquetas X para mayor legibilidad
         plt.xticks(rotation=45, ha='right')
         
-        # Añadir valor en la parte superior de cada barra
+        # Añadir valores en la parte superior de cada barra
         for index, row in df.iterrows():
             ax.text(index, row['total_antibioticos_resistentes'], str(row['total_antibioticos_resistentes']), ha='center', va='bottom', fontsize=12)
 
